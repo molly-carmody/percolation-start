@@ -16,5 +16,24 @@ public class PercolationStats {
 	public static int RANDOM_SEED = 1234;
 	public static Random ourRandom = new Random(RANDOM_SEED);
 
-	// TODO Add methods as described in assignment writeup
+
+		   public PercolationStats(int N, int T){
+		   // perform T independent experiments on an N-by-N grid
+		   public double mean(){
+			   return;
+			   // sample mean of percolation threshold
+		   }
+		   public double stddev()   {
+			   // sample standard deviation of percolation threshold
+		   }
+		   public double confidenceLow() {
+			   // low  endpoint of 95% confidence interval
+		   }
+		   public double confidenceHigh() {
+			   // high endpoint of 95% confidence interval
+		   }
+		   public static void main(String[] args){
+			   // print out values for testing &  analysis
+		   }
+		}
 }

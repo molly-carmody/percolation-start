@@ -58,10 +58,10 @@ public class QuickFind implements IUnionFind {
 
 	// merge components containing p and q
 	public void union(int p, int q) {
-		if (connected(p, q))
+		if (connected(p, q)) //p is position 
 			return;
-		int pid = myID[p];
-		for (int i = 0; i < myID.length; i++)
+		int pid = myID[p]; //
+		for (int i = 0; i < myID.length; i++) //everythign that equal to p is turned into q
 			if (myID[i] == pid)
 				myID[i] = myID[q];
 		myComponents -= 1;

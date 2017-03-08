@@ -22,32 +22,25 @@ import com.sun.org.apache.xerces.internal.impl.dv.xs.FullDVFactory;
 public class PercolationUF implements IPercolate {
 	private final int OUT_BOUNDS = -1;
 	private int myOpenSites;
-	public int touched;
+	public int[][] myGrid;
+	public QuickUWPC finder;
+	private final int SinkIndex;
+	private final int SourceIndex;
+
 	/**
 	 * Constructs a Percolation object for a nxn grid that that creates
 	 * a IUnionFind object to determine whether cells are full
 	 */
 
-
-	public int[][] myGrid;
-	public int index;
-	public QuickFind finder;
-	private final int SinkIndex;
-	private final int SourceIndex;
-
 	public PercolationUF(int n) {
-		touched = 0;
-
-
 		myOpenSites = 0;
 		myGrid = new int[n][n];
+		finder = new QuickUWPC(n*n +2);
+		SinkIndex = n*n +1;
+		SourceIndex = n*n;
 		for (int[] row:myGrid){
 			Arrays.fill(row, BLOCKED);
 		}
-		finder = new QuickFind(n*n +2);
-		SinkIndex = n*n +1;
-		SourceIndex = n*n;
-
 	}
 
 	/**
@@ -58,19 +51,19 @@ public class PercolationUF implements IPercolate {
 	
 	public int getIndex(int row, int col) {
 		// TODO complete getIndex
-		if (row<0||row>myGrid.length||col<0||col>myGrid[0].length){ //checking if in bounds
+		if (row<0||row>=myGrid.length||col<0||col>=myGrid[0].length){ //checking if in bounds
 			throw new IndexOutOfBoundsException("Index " + row + "," +col+ " is bad!");
 			}
-	
-		return row*myGrid.length + col; //
+		else{
+		return row*myGrid.length + col;}
 	}
 
 
 	public void open(int i, int j) {
-		if (i<0||i>myGrid.length||j<0||j>myGrid[0].length){ //checking if in bounds
+		if (i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){ //checking if in bounds
 		throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
 		}
-		// TODO complete open
+		
 		if (myGrid[i][j] != BLOCKED){
 			return;
 			}
@@ -81,7 +74,7 @@ public class PercolationUF implements IPercolate {
 	}
 
 	public boolean isOpen(int i, int j) {
-		if(i<0||i>myGrid.length||j<0||j>myGrid[0].length){
+		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
 		throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
 		}
 		// TODO complete isOpen

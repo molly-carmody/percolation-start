@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
  */
 
 public class PercolationStats {
-	private static int RANDOM_SEED = 1234;
-	private static Random ourRandom = new Random(RANDOM_SEED);
+	 public static int RANDOM_SEED = 1234;
+	public static Random ourRandom = new Random(RANDOM_SEED);
 	private static final int BLOCKED = 0;
 	private static final int OPEN = 1;
 	private static final int FULL = 2;

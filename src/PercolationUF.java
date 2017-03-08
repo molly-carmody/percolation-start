@@ -107,25 +107,11 @@ public class PercolationUF implements IPercolate {
 
 	public boolean percolates() {
 
-		//if top row and btoom row are in teh same set, then percolates
-		// TODO complete percolates
-		for(int row = 0;row<myGrid.length;row++){
-
-			for(int col=0;col<myGrid[row].length;col++){
-				if(finder.connected(finder.find(getIndex(0,row)), getIndex(myGrid.length-1,col))){
-					return true;
-				}
-			}
-
+	
+		return finder.connected(SinkIndex, SourceIndex);
+					
 		}
-		/*if(finder.connected(SinkIndex, SourceIndex)){
-			touched = finder.components()-2;
-			System.out.println(touched);
-			return true;
-		}*/
-		return false;
-
-	}
+		
 
 
 
@@ -140,6 +126,9 @@ public class PercolationUF implements IPercolate {
 		}
 		if(row==0){
 			finder.union(SourceIndex, getIndex(row,col));
+		}
+		if(row==myGrid.length-1){
+			finder.union(SinkIndex, getIndex(row,col));
 		}
 		int perfIndex = getIndex(row,col);
 		if(row-1>=0){ //checks up 

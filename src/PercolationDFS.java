@@ -34,7 +34,7 @@ public int N;
 		if(n<=0){
 			throw new IllegalArgumentException("n is less than or equal to 0");
 		}
-		int N = n;
+		N = n;
 		myOpenSites = 0;
 		myGrid = new int[N][N];
 		for (int[] row:myGrid){
@@ -43,35 +43,34 @@ public int N;
 		// TODO complete constructor and add necessary instance variables
 
 	}
-public boolean bottom(int i, int j){
-	if(i ==N){
-		return true;	
-	}
-	return false;
-}
+
 	public void open(int i, int j) {
+		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
+			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
+		}
 		if(myGrid[i][j] != BLOCKED){
 			return;
 		}
-		myOpenSites++;
-		myGrid[i][j] = OPEN;
+		
 		// TODO complete open
 		
 		for(int r=0; r<myGrid.length; r++){
 			for (int c=0; c<myGrid.length;c++){
 				if(myGrid[r][c] == FULL){
 					myGrid[r][c] = OPEN;
-					dfs(r,c);
+			
 				}
 			}
 		}
+		myOpenSites++;
+		myGrid[i][j] = OPEN;
 		for(int r=0; r<myGrid.length; r++){
-				if(myGrid[0][r] ==OPEN){
+				if(myGrid[0][r] ==OPEN){ //!BLOCKED
 					dfs(0,r);
 				}
 			}
 		
-	
+		
 	}
 	public boolean isOpen(int i, int j) {
 		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
@@ -83,6 +82,9 @@ public boolean bottom(int i, int j){
 	public boolean isFull(int i, int j) {
 		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
 			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
+		}
+		if(isOpen(i,j)==false){
+		return myGrid[i][j] == FULL;
 		}
 		return myGrid[i][j] == FULL;
 	}

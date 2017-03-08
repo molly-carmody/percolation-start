@@ -33,6 +33,9 @@ public class PercolationUF implements IPercolate {
 	 */
 
 	public PercolationUF(int n) {
+		if(n<=0){
+			throw new IllegalArgumentException("out of bounds n");
+		}
 		myOpenSites = 0;
 		myGrid = new int[n][n];
 		finder = new QuickUWPC(n*n +2);

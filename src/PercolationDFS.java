@@ -29,14 +29,14 @@ public class PercolationDFS implements IPercolate {
 	 * @param n
 	 *            is the size of the simulated (square) grid
 	 */
-public int N;
+
 	public PercolationDFS(int n) {
 		if(n<=0){
 			throw new IllegalArgumentException("n is less than or equal to 0");
 		}
-		N = n;
+		
 		myOpenSites = 0;
-		myGrid = new int[N][N];
+		myGrid = new int[n][n];
 		for (int[] row:myGrid){
 			Arrays.fill(row, BLOCKED);
 		}
@@ -45,9 +45,7 @@ public int N;
 	}
 
 	public void open(int i, int j) {
-		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
-			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
-		}
+		
 		if(myGrid[i][j] != BLOCKED){
 			return;
 		}
@@ -83,15 +81,15 @@ public int N;
 		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
 			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
 		}
-		if(isOpen(i,j)==false){
-		return myGrid[i][j] == FULL;
-		}
+		//if(isOpen(i,j)==false){
+		//return myGrid[i][j] == FULL;
+		//}
 		return myGrid[i][j] == FULL;
 	}
 
 	public int numberOfOpenSites() {
 		// TODO return the number of calls to open new sites
-		return N;
+		return myOpenSites;
 	}
 
 	public boolean percolates() {

@@ -90,5 +90,6 @@ public class PercolationVisualizer {
 		// IPercolate perc = new PercolationUF(N);
 		PercolationVisualizer pv = new PercolationVisualizer(N, perc);
 		pv.run();
+		
 	}
 }

@@ -31,6 +31,9 @@ public class PercolationDFS implements IPercolate {
 	 */
 public int N;
 	public PercolationDFS(int n) {
+		if(n<=0){
+			throw new IllegalArgumentException("n is less than or equal to 0");
+		}
 		int N = n;
 		myOpenSites = 0;
 		myGrid = new int[N][N];

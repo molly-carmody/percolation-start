@@ -1,8 +1,11 @@
+
 import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 /**
  * Compute statistics on Percolation afte performing T independent experiments on an N-by-N grid.
- * Compute 95% confidence interval for the percolation threshold, and  mean and std. deviation
+ * Compute 95% confidence interval for the percolation threshold, and  mean and std. deviation
  * Compute and print timings
  * 
  * @author Kevin Wayne
@@ -11,15 +14,14 @@ import java.util.Random;
  */
 
 public class PercolationStats {
-	public static int RANDOM_SEED = 1234;
-	public static Random ourRandom = new Random(RANDOM_SEED);
-	public static final int BLOCKED = 0;
-	public static final int OPEN = 1;
-	public static final int FULL = 2;
-
-	private IPercolate perc;
-	private int[] openSite;
-	public int[][] myGrid;
+	private static int RANDOM_SEED = 1234;
+	private static Random ourRandom = new Random(RANDOM_SEED);
+	private static final int BLOCKED = 0;
+	private static final int OPEN = 1;
+	private static final int FULL = 2;
+	private int[] openSites;
+	private IPercolate percs;
+	private int[][] myGrid;
 
 	// TODO Add methods as described in assignment writeup
 
@@ -27,59 +29,59 @@ public class PercolationStats {
 		if(N <= 0 || T <= 0) {
 			throw new IllegalArgumentException("Bad N or T");
 		}
-		openSite = new int[T];
 		myGrid = new int[N][N];
-
+		openSites = new int[T];
 		for(int i=0; i<myGrid.length; i++) {
 			for(int j=0; j<myGrid.length; j++) {
 				myGrid[i][j] = BLOCKED;
 			}
 		}
 		for(int k=0; k < T; k++) {
-			perc = new PercolationUF(N);
 			int j;
 			int i;
-			while(!perc.percolates()) {
-				j = ourRandom.nextInt(N);
+			percs = new PercolationUF(N);
+			while(!percs.percolates()) {
 				i = ourRandom.nextInt(N);
-				if(!perc.isOpen(i, j)) {
-					perc.open(i, j);
+				j = ourRandom.nextInt(N);
+				if(!percs.isOpen(i, j)) {
+					percs.open(i, j);
 				} else {
-					openSite[k] = perc.numberOfOpenSites();
+					openSites[k] = percs.numberOfOpenSites();
 				}
 			}
 		}
 	}
-	// perform T independent experiments on an N-by-N grid
-	public double mean(){
+
+	public double mean() {
+
 		double add=0;
-		for(int l=0; l<openSite.length;l++){
-			add += openSite[l];
+		for(int l=0; l<openSites.length;l++){
+			add += openSites[l];
 		}
-		return (add/openSite.length);
-		// sample mean of percolation threshold
+		return (add/openSites.length);
 	}
-	public double stddev(){
-	//	double mean = mean();
+	public double stddev() {
 		double sum = 0;
-		for(int k:openSite){
+		for(int k:openSites){
 			double hm = k-mean();
 			sum+= hm*hm;
 		}
-		return Math.sqrt(sum/(openSite.length-1.0));
-	
+		return Math.sqrt(sum/(openSites.length-1.0));
 
-		// sample standard deviation of percolation threshold
+
+
 	}
-	public double confidenceLow(){
-		return mean() - 2*stddev();
-		// low  endpoint of 95% confidence interval
+
+	public double confidenceLow() {
+
+		return mean() - 2.0*stddev();
 	}
-	public double confidenceHigh(){
-		return mean() + 2*stddev();
-		// high endpoint of 95% confidence interval
+
+	public double confidenceHigh() {
+		return mean() + 2.0*stddev();
 	}
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		PercolationStats percc = new PercolationStats(5,5);
 		double mea = percc.mean();
 		System.out.println(mea);
@@ -87,11 +89,10 @@ public class PercolationStats {
 		System.out.println(SD);
 		double CL = percc.confidenceLow();
 		System.out.println(CL);
-		double CH= percc.confidenceHigh();
+		double CH = percc.confidenceHigh();
 		System.out.println(CH);
-
-
-		// print out values for testing &  analysis
 	}
 }
+
+
 

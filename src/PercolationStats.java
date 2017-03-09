@@ -67,7 +67,7 @@ public class PercolationStats {
 		for(int l=0; l<openSites.length;l++){
 			add += openSites[l];
 		}
-		return (add/n);
+		return (add/t);
 	}
 	public double stddev() {
 		double sum = 0;
@@ -76,7 +76,7 @@ public class PercolationStats {
 			double hm = k-mean();
 			sum+= hm*hm;
 		}
-		return Math.sqrt(sum/(n));
+		return Math.sqrt(sum/(t-1));
 
 
 

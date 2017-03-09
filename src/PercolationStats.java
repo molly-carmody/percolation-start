@@ -24,11 +24,12 @@ public class PercolationStats {
 	private int[][] myGrid;
 
 	// TODO Add methods as described in assignment writeup
-
+int t;
 	public PercolationStats(int N, int T) {
 		if(N <= 0 || T <= 0) {
 			throw new IllegalArgumentException("Bad N or T");
 		}
+		t = T;
 		myGrid = new int[N][N];
 		openSites = new int[T];
 		for(int i=0; i<myGrid.length; i++) {
@@ -36,6 +37,7 @@ public class PercolationStats {
 				myGrid[i][j] = BLOCKED;
 			}
 		}
+	
 		for(int k=0; k < T; k++) {
 			int j;
 			int i;
@@ -43,11 +45,11 @@ public class PercolationStats {
 			while(!percs.percolates()) {
 				i = ourRandom.nextInt(N);
 				j = ourRandom.nextInt(N);
-				if(!percs.isOpen(i, j)) {
+				if(percs.isOpen(i, j)||percs.isFull(i, j)) {
 					percs.open(i, j);
-				} else {
-					openSites[k] = percs.numberOfOpenSites();
-				}
+				} 
+			openSites[k] = percs.numberOfOpenSites();
+				
 			}
 		}
 	}
@@ -63,6 +65,7 @@ public class PercolationStats {
 	public double stddev() {
 		double sum = 0;
 		for(int k:openSites){
+			System.out.println(k);
 			double hm = k-mean();
 			sum+= hm*hm;
 		}
@@ -74,11 +77,11 @@ public class PercolationStats {
 
 	public double confidenceLow() {
 
-		return mean() - 2.0*stddev();
+		return mean() - ((1.96*stddev())/Math.sqrt(openSites.length));
 	}
 
 	public double confidenceHigh() {
-		return mean() + 2.0*stddev();
+		return mean() + ((1.96*stddev())/Math.sqrt(openSites.length));
 	}
 
 	public static void main(String[] args) {

@@ -40,7 +40,7 @@ public class PercolationStats {
 			}
 		}
 
-		double start = System.nanoTime(); //starts timer 
+		//double start = System.nanoTime(); //starts timer 
 		//until the system percolates, counts the number of sites opened in each run 
 		for(int k=0; k < T; k++) {
 			percs = new PercolationDFS(N);
@@ -59,8 +59,8 @@ public class PercolationStats {
 			}
 			openSites[k] = (double) OSites/(n*n);
 		}
-		double end = System.nanoTime(); //ends timer
-		System.out.printf("total time = %2.3f\n", (end-start)/1e9);
+		//double end = System.nanoTime(); //ends timer
+		//System.out.printf("total time = %2.3f\n", (end-start)/1e9);
 	}
 
 	//calculates the mean 

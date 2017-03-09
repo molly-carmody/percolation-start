@@ -22,7 +22,7 @@ public class PercolationUF implements IPercolate {
 	private final int OUT_BOUNDS = -1;
 	private int myOpenSites;
 	public int[][] myGrid;
-	public QuickFind finder;
+	public QuickUWPC finder;
 	private final int SinkIndex;
 	private final int SourceIndex;
 
@@ -37,7 +37,7 @@ public class PercolationUF implements IPercolate {
 		}
 		myOpenSites = 0;
 		myGrid = new int[n][n];
-		finder = new QuickFind(n*n +2);
+		finder = new QuickUWPC(n*n +2);
 		SinkIndex = n*n +1; //creates virtual sink
 		SourceIndex = n*n; //creates virtual source
 		for (int[] row:myGrid){  //sets all as blocked

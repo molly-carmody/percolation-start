@@ -40,13 +40,16 @@ public class PercolationStats {
 		}
 	
 		for(int k=0; k < T; k++) {
-			int j;
-			int i;
+			
 			percs = new PercolationUF(N);
 			while(!percs.percolates()) {
+				int j;
+				int i;
+				do{
 				i = ourRandom.nextInt(N);
 				j = ourRandom.nextInt(N);
-				while(percs.isOpen(i, j)||percs.isFull(i, j)) {
+				}
+				while(percs.isOpen(i, j)||percs.isFull(i, j));{
 					percs.open(i, j);
 				} 
 			

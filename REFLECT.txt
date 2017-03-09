@@ -41,7 +41,7 @@ union with path compression).
 Problem 4: Give a formula (using Big-Oh notation) of the running time on your computer (in seconds) as a function of both N and T.
 	PercolationDFS: O(T*N^2)
 	PercolationUF with QuickFind: O(T*N)
-	PercolationUF with QuickUWPC: O(N + TlogN)
+	PercolationUF with QuickUWPC: O(N + TlgN)
 
 Problem 5: Estimate the largest experiment you could  perform in one
 [minute, day, year] assuming your computer has enough memory.

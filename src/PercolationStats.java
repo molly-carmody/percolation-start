@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  */
 
 public class PercolationStats {
+	public static int RANDOM_SEED = 1234;
+	public static Random ourRandom = new Random(RANDOM_SEED);
 	private static final int BLOCKED = 0;
 	private static final int OPEN = 1;
 	private static final int FULL = 2;
-	public static int RANDOM_SEED = 1234;
-	public static Random ourRandom = new Random(RANDOM_SEED);
-
+	
 	private double[] openSites;
 	private int[][] myGrid;
 	private IPercolate percs;
@@ -43,8 +43,8 @@ public class PercolationStats {
 		//double start = System.nanoTime(); //starts timer 
 		//until the system percolates, counts the number of sites opened in each run 
 		for(int k=0; k < T; k++) {
-			percs = new PercolationDFS(N);
-			//percs = new PercolationUF(N);
+			//percs = new PercolationDFS(N);
+			percs = new PercolationUF(N);
 			int OSites=0;
 			
 			while(!percs.percolates()) {
@@ -53,8 +53,9 @@ public class PercolationStats {
 				i = ourRandom.nextInt(N); //generates random i and 
 				j = ourRandom.nextInt(N);//random j to "grab" a random location
 				if(!(percs.isOpen(i, j))){ //checks if its open and if not
-					OSites++;				//it opens it 
+									//it opens it 
 					percs.open(i, j);
+					OSites++;
 				} 
 			}
 			openSites[k] = (double) OSites/(n*n);
@@ -91,7 +92,7 @@ public class PercolationStats {
 	//calculates the mean, SD, low confidence, and high confidence of
 	//an example percolation and prints out the results
 	public static void main(String[] args) {
-		PercolationStats percc = new PercolationStats(20,40);
+		PercolationStats percc = new PercolationStats(5,5);
 		double mea = percc.mean();
 		double SD = percc.stddev();
 		double CL = percc.confidenceLow();

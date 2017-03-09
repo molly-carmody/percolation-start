@@ -23,6 +23,7 @@ public class PercolationStats {
 	private IPercolate percs;
 	private int[][] myGrid;
 	private int t;
+	private int n;
 	// TODO Add methods as described in assignment writeup
 
 	public PercolationStats(int N, int T) {
@@ -30,6 +31,7 @@ public class PercolationStats {
 			throw new IllegalArgumentException("Bad N or T");
 		}
 		t = T;
+		n=N;
 		
 		myGrid = new int[N][N];
 		openSites = new int[T];
@@ -65,7 +67,7 @@ public class PercolationStats {
 		for(int l=0; l<openSites.length;l++){
 			add += openSites[l];
 		}
-		return (add/openSites.length);
+		return (add/t);
 	}
 	public double stddev() {
 		double sum = 0;
@@ -74,7 +76,7 @@ public class PercolationStats {
 			double hm = k-mean();
 			sum+= hm*hm;
 		}
-		return Math.sqrt(sum/(t-1.0));
+		return Math.sqrt(sum/(t));
 
 
 

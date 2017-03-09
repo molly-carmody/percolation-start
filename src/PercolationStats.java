@@ -19,7 +19,7 @@ public class PercolationStats {
 	private static final int BLOCKED = 0;
 	private static final int OPEN = 1;
 	private static final int FULL = 2;
-	private int[] openSites;
+	private double[] openSites;
 	private IPercolate percs;
 	private int[][] myGrid;
 	private int t;
@@ -34,7 +34,7 @@ public class PercolationStats {
 		n=N;
 		
 		myGrid = new int[N][N];
-		openSites = new int[T];
+		openSites = new double[T];
 		for(int i=0; i<myGrid.length; i++) {
 			for(int j=0; j<myGrid.length; j++) {
 				myGrid[i][j] = BLOCKED;
@@ -44,20 +44,22 @@ public class PercolationStats {
 		for(int k=0; k < T; k++) {
 			
 			percs = new PercolationUF(N);
+			int OSites=0;
 			while(!percs.percolates()) {
 				int j;
 				int i;
-				do{
+			
 				i = ourRandom.nextInt(N);
 				j = ourRandom.nextInt(N);
-				}
-				while(percs.isOpen(i, j)||percs.isFull(i, j));{
+				
+				if(!percs.isOpen(i, j)){
 					percs.open(i, j);
+					OSites++;
 				} 
 			
 				
 			}
-			openSites[k] = percs.numberOfOpenSites();
+			openSites[k] = (double) OSites/(n*n);
 		}
 	}
 
@@ -71,7 +73,7 @@ public class PercolationStats {
 	}
 	public double stddev() {
 		double sum = 0;
-		for(int k:openSites){
+		for(double k:openSites){
 			System.out.println(k);
 			double hm = k-mean();
 			sum+= hm*hm;

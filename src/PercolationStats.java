@@ -22,14 +22,15 @@ public class PercolationStats {
 	private int[] openSites;
 	private IPercolate percs;
 	private int[][] myGrid;
-
+	private int n;
 	// TODO Add methods as described in assignment writeup
-int t;
+
 	public PercolationStats(int N, int T) {
 		if(N <= 0 || T <= 0) {
 			throw new IllegalArgumentException("Bad N or T");
 		}
-		t = T;
+		n = N;
+		
 		myGrid = new int[N][N];
 		openSites = new int[T];
 		for(int i=0; i<myGrid.length; i++) {
@@ -69,7 +70,7 @@ int t;
 			double hm = k-mean();
 			sum+= hm*hm;
 		}
-		return Math.sqrt(sum/(openSites.length-1.0));
+		return Math.sqrt(sum/(n-1.0));
 
 
 
@@ -77,11 +78,11 @@ int t;
 
 	public double confidenceLow() {
 
-		return mean() - ((1.96*stddev())/Math.sqrt(openSites.length));
+		return mean() - ((1.96*stddev())/Math.sqrt(n));
 	}
 
 	public double confidenceHigh() {
-		return mean() + ((1.96*stddev())/Math.sqrt(openSites.length));
+		return mean() + ((1.96*stddev())/Math.sqrt(n));
 	}
 
 	public static void main(String[] args) {

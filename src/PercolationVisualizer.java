@@ -20,7 +20,7 @@ public class PercolationVisualizer {
 	public final int DEFAULT_DELAY = msInSec / HZ; // in milliseconds
 	private int mySize;
 	private IPercolate myPerc;
-	
+
 	public PercolationVisualizer(int n, IPercolate perc) {
 		mySize = n;
 		myPerc = perc;
@@ -49,7 +49,7 @@ public class PercolationVisualizer {
 					draw(row, col, Color.WHITE);
 			}
 	}
-	
+
 	public List<Point> getShuffledCells() {
 		ArrayList<Point> list = new ArrayList<Point>();
 		for (int i = 0; i < mySize; i++)
@@ -73,7 +73,7 @@ public class PercolationVisualizer {
 				break;
 		}
 		drawGrid();
-		
+
 	}
 	public static void main(String[] args) {
 		// Animate 20 times a second if possible
@@ -90,6 +90,6 @@ public class PercolationVisualizer {
 		// IPercolate perc = new PercolationUF(N);
 		PercolationVisualizer pv = new PercolationVisualizer(N, perc);
 		pv.run();
-		
+
 	}
 }

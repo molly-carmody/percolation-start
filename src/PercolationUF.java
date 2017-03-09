@@ -17,13 +17,12 @@ import com.sun.org.apache.xerces.internal.impl.dv.xs.FullDVFactory;
  * @author Jeff Forbes
  *
  */
-// n^2 sets in an nxn
-//set where open cell is found is to be unioned with teh sets of each neighboring cell 
+
 public class PercolationUF implements IPercolate {
 	private final int OUT_BOUNDS = -1;
 	private int myOpenSites;
 	public int[][] myGrid;
-	public QuickUWPC finder;
+	public QuickFind finder;
 	private final int SinkIndex;
 	private final int SourceIndex;
 
@@ -33,15 +32,15 @@ public class PercolationUF implements IPercolate {
 	 */
 
 	public PercolationUF(int n) {
-		if(n<=0){
+		if(n<=0){ //checks if its a valid n
 			throw new IllegalArgumentException("out of bounds n");
 		}
 		myOpenSites = 0;
 		myGrid = new int[n][n];
-		finder = new QuickUWPC(n*n +2);
-		SinkIndex = n*n +1;
-		SourceIndex = n*n;
-		for (int[] row:myGrid){
+		finder = new QuickFind(n*n +2);
+		SinkIndex = n*n +1; //creates virtual sink
+		SourceIndex = n*n; //creates virtual source
+		for (int[] row:myGrid){  //sets all as blocked
 			Arrays.fill(row, BLOCKED);
 		}
 	}
@@ -51,67 +50,53 @@ public class PercolationUF implements IPercolate {
 	 * based on row-major ordering of cells in a two-dimensional grid. However,
 	 * if (row,col) is out-of-bounds, return OUT_BOUNDS.
 	 */
-	
+	//generates an index for row,col
 	public int getIndex(int row, int col) {
-		// TODO complete getIndex
 		if (row<0||row>=myGrid.length||col<0||col>=myGrid[0].length){ //checking if in bounds
 			throw new IndexOutOfBoundsException("Index " + row + "," +col+ " is bad!");
-			}
+		}
 		else{
-		return row*myGrid.length + col;}
+			return row*myGrid.length + col;}
 	}
 
-
+	//opens the designated site
 	public void open(int i, int j) {
 		if (i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){ //checking if in bounds
-		throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
+			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
 		}
-		
 		if (myGrid[i][j] != BLOCKED){
 			return;
-			}
+		}
 		myOpenSites++;
 		myGrid[i][j] = OPEN;
 		connect(i,j);
-
 	}
-
+	//checks if (i,j) is open in the grid
 	public boolean isOpen(int i, int j) {
-		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){
-		throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
-		}
-		// TODO complete isOpen
-		return myGrid[i][j]==OPEN||myGrid[i][j] == FULL;
-
-	}
-
-	public boolean isFull(int i, int j) {
-		if(i<0 || i>=myGrid.length ||j<0 || j>=myGrid[0].length){
+		if(i<0||i>=myGrid.length||j<0||j>=myGrid[0].length){ //checking if in bounds
 			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
 		}
-		if(finder.connected(SourceIndex, getIndex(i,j))){
+		return myGrid[i][j]==OPEN||myGrid[i][j] == FULL;
+	}
+
+	//checks if (i,j) is full in the grid
+	public boolean isFull(int i, int j) {
+		if(i<0 || i>=myGrid.length ||j<0 || j>=myGrid[0].length){ //checking if in bounds
+			throw new IndexOutOfBoundsException("Index " + i + "," +j+ " is bad!");
+		}
+		if(finder.connected(SourceIndex, getIndex(i,j))){ //checks if top and box are in same set
 			return true;
 		}
-		// TODO complete isFull
 		return false;
 	}
-
+	//return the number of calls to open new sites
 	public int numberOfOpenSites() {
-		// TODO return the number of calls to open new sites
 		return myOpenSites;
 	}
-
+	//checks if system percolates by seeing if sink and source are in same set
 	public boolean percolates() {
-
-	
-		return finder.connected(SinkIndex, SourceIndex);
-					
-		}
-		
-
-
-
-
+		return finder.connected(SinkIndex, SourceIndex);			
+	}
 
 	/**
 	 * Connect new site (row, col) to all adjacent open sites
@@ -126,7 +111,7 @@ public class PercolationUF implements IPercolate {
 		if(row==myGrid.length-1){
 			finder.union(SinkIndex, getIndex(row,col));
 		}
-		int perfIndex = getIndex(row,col);
+		int perfIndex = getIndex(row,col); //gets current box's index
 		if(row-1>=0){ //checks up 
 			if(isOpen(row-1,col)){
 				finder.union(getIndex(row-1,col),perfIndex);
@@ -147,9 +132,6 @@ public class PercolationUF implements IPercolate {
 				finder.union(getIndex(row,col+1),perfIndex);
 			}
 		}
-		// TODO complete connect
-
-
 	}
 
 }

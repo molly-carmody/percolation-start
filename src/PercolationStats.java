@@ -22,14 +22,14 @@ public class PercolationStats {
 	private int[] openSites;
 	private IPercolate percs;
 	private int[][] myGrid;
-	private int n;
+	private int t;
 	// TODO Add methods as described in assignment writeup
 
 	public PercolationStats(int N, int T) {
 		if(N <= 0 || T <= 0) {
 			throw new IllegalArgumentException("Bad N or T");
 		}
-		n = N;
+		t = T;
 		
 		myGrid = new int[N][N];
 		openSites = new int[T];
@@ -46,12 +46,13 @@ public class PercolationStats {
 			while(!percs.percolates()) {
 				i = ourRandom.nextInt(N);
 				j = ourRandom.nextInt(N);
-				if(percs.isOpen(i, j)||percs.isFull(i, j)) {
+				while(percs.isOpen(i, j)||percs.isFull(i, j)) {
 					percs.open(i, j);
 				} 
-			openSites[k] = percs.numberOfOpenSites();
+			
 				
 			}
+			openSites[k] = percs.numberOfOpenSites();
 		}
 	}
 
@@ -70,7 +71,7 @@ public class PercolationStats {
 			double hm = k-mean();
 			sum+= hm*hm;
 		}
-		return Math.sqrt(sum/(n-1.0));
+		return Math.sqrt(sum/(t-1.0));
 
 
 
@@ -78,11 +79,11 @@ public class PercolationStats {
 
 	public double confidenceLow() {
 
-		return mean() - ((1.96*stddev())/Math.sqrt(n));
+		return mean() - ((1.96*stddev())/Math.sqrt(t));
 	}
 
 	public double confidenceHigh() {
-		return mean() + ((1.96*stddev())/Math.sqrt(n));
+		return mean() + ((1.96*stddev())/Math.sqrt(t));
 	}
 
 	public static void main(String[] args) {

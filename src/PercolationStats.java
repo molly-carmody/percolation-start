@@ -40,7 +40,7 @@ public class PercolationStats {
 			}
 		}
 
-		//double start = System.nanoTime(); //starts timer 
+		double start = System.nanoTime(); //starts timer 
 		//until the system percolates, counts the number of sites opened in each run 
 		for(int k=0; k < T; k++) {
 			//percs = new PercolationDFS(N);
@@ -92,7 +92,7 @@ public class PercolationStats {
 	//calculates the mean, SD, low confidence, and high confidence of
 	//an example percolation and prints out the results
 	public static void main(String[] args) {
-		PercolationStats percc = new PercolationStats(5,5);
+		PercolationStats percc = new PercolationStats(200,1);
 		double mea = percc.mean();
 		double SD = percc.stddev();
 		double CL = percc.confidenceLow();

@@ -1,9 +1,9 @@
 Name: Molly Carmody
 NetID: mkc35
 Hours Spent: 9.3
-Consulted With: Kayla Derman, Jacqui Levitan, Kelly McLaughlin, Professor Forbes
+Consulted With: Kayla Derman, Jacqui Levitan, Kelly McLaughlin, Professor Forbes, Sarah Faller
 Resources Used: NONE 
-Impressions: I found the assignment interesting, especially sinced it invovled visuals. However, the directions
+Impressions: I found the assignment interesting, especially since it invovled visuals. However, the directions
 were extremely vague and difficult to follow. I think it would have been helpful if more details were provided, without
 necessarily giving away what to write. 
 ----------------------------------------------------------------------
@@ -41,16 +41,40 @@ union with path compression).
 Problem 4: Give a formula (using Big-Oh notation) of the running time on your computer (in seconds) as a function of both N and T.
 	PercolationDFS: O(T*N^2)
 	PercolationUF with QuickFind: O(T*N)
-	PercolationUF with QuickUWPC: O(N + TlgN)
+	PercolationUF with QuickUWPC: O((N+T)logN)
 
 Problem 5: Estimate the largest experiment you could  perform in one
 [minute, day, year] assuming your computer has enough memory.
-5A 1 minute:
-5B 1 day:
-5C 1 year:
+**times is in seconds.
+DATA:
+		DFS			QuickFind		QuickUWPC
+N=200	0.552		0.388			0.026
+		0.559		0.408			0.024
+		0.518		0.395			0.02
+		0.542		0.406			0.19
+avg.:	0.54275		0.39925			0.065
+
+EXPLANATION:
+In order to estimate the largest experiment possible, I collected 
+the run times for all three programs when N=200 and T=1.
+After averaging these, I plugged each average time, N=200, and T=1
+into their respective big oh equations. I then solved for m, or the 
+constant. For DFS, I used m*T*N^2 = run time, for QuickFind I used 
+m*T*N = run time, and for QuickUWPC I used m*(N+T)logN = run time. 
+By solving for m, I could then plug in the 1 minute, 1 day, and 1 year
+into each equation as the run time along with the calculated m and T =1, and
+solve for N. 
+
+m (constant):   DFS					QuickFind			QuickUWPC
+				0.00001356875		0.00199625			0.0001412410966	
+	
+ANSWER/RESULT:		
+5A 1 minute: DFS = 2102.837459		QuickFind = 30056.35567		QuickUWPC = 40081.1
+5B 1 day: 	 DFS = 79797.07104		QuickFind = 43281152.16		QuickUWPC = 3.52035×10^7
+5c 1 year: 	 DFS = 1524617.583		QuickFind = 15799624296		QuickUWPC = 9.71045×10^9
 
 Problem 6: Give a formula (using Big-Oh notation) that describes the amount
 of memory (in bytes) that your IPercolate implementation consumes as a function of N.
-6A DFS: 
-6B Quick Find:
-6C Weighted quick union with path compression:
+6A DFS: O(N^2)
+6B Quick Find:O(N^2)
+6C Weighted quick union with path compression: O(N^2)
